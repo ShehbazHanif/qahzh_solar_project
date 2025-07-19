@@ -56,8 +56,7 @@ userId: {
 
   images: [
     {
-      type: String,
-      public_id: String // If using Cloudinary or external storage
+      type: String, // If using Cloudinary or external storage
     }
   ],
 

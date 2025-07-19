@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const express = require('express');
 
 const connectDB = require('./config/db');
@@ -12,6 +13,7 @@ connectDB();
 // Middlewares
 app.use(express.json()); // for parsing application/json
 
+app.use(express.urlencoded());
 
 // Default Route
 app.get('/', (req, res) => {
@@ -20,13 +22,12 @@ app.get('/', (req, res) => {
     message: 'Qafzh Solar System API is up and running 🌞'
   });
 });
-
 // Auth Routes
 app.use('/api/v1/auth', require('./routes/authRoutes'));
-
 //product Routes
-
 app.use('/api/v1/product', require('./routes/productRoute'));
+//admin auth
+app.use('/api/v1/admin-auth', require('./routes/adminAuthRoutes'));
 
 // 404 Handling
 app.use((req, res) => {
@@ -48,5 +49,5 @@ app.use((err, req, res, next) => {
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
-  console.log(`🚀 Server is live at http://localhost:${PORT}`)
+  console.log(` Server is live at http://localhost:${PORT}`)
 );

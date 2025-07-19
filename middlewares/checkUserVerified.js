@@ -1,23 +1,30 @@
 const User = require('../models/auth');
 const generateOTP = require('../utils/generateOtp');
-const sendSms = require('../utils/sendSms'); // 🔁 changed from sendOTP
+const sendMail = require('../utils/mailingService'); // ✅ Using mailing instead of SMS
 
-const checkUserVerifiedOrSendOtp = async (req, res, next) => {
-  const { phone } = req.body;
+const checkUserVerified = async (req, res, next) => {
+  console.log(req.body);
 
-  if (!phone) return res.status(400).json({ msg: 'Phone number required' });
+  const { phone } = req.body.productData;
+
+  console.log("Phone:", phone);
+
+  if (!phone) {
+    return res.status(400).json({ msg: 'phone is required' });
+  }
 
   const user = await User.findOne({ phone });
 
-  if (!user) return res.status(404).json({ msg: 'User not found. Please register first.' });
+  if (!user) {
+    return res.status(404).json({ msg: 'User not found. Please register first.' });
+  }
 
-  // ✅ If user is verified, allow to proceed
   if (user.verified) {
     req.user = user;
+    req.productData = productData;
     return next();
   }
 
-  // ❌ Not verified → generate and send OTP
   const otp = generateOTP();
   const otpExpires = new Date(Date.now() + 5 * 60 * 1000);
 
@@ -25,16 +32,27 @@ const checkUserVerifiedOrSendOtp = async (req, res, next) => {
   user.otpExpires = otpExpires;
   await user.save();
 
-  const smsResult = await sendSms(phone, `Your OTP is ${otp}`);
+  const subject = 'Verify Your Email - OTP';
+  const htmlContent = `
+    <p>Hello,</p>
+    <p>Your OTP is <strong>${otp}</strong>.</p>
+    <p>This OTP will expire in 5 minutes.</p>
+  `;
 
-  if (!smsResult.success) {
-    return res.status(500).json({ msg: 'Failed to send OTP via SMS', error: smsResult.error });
+  const result = await sendMail(user.email, subject, htmlContent);
+
+  if (result.accepted?.includes(user.email)) {
+    return res.status(401).json({
+      msg: 'Email is not verified. OTP has been sent.',
+      email: user.email
+    });
+  } else {
+    return res.status(500).json({
+      msg: 'Failed to send OTP via Email',
+      error: result.error || 'Unknown error'
+    });
   }
-
-  return res.status(401).json({
-    msg: 'Your number is not verified. OTP has been resent.',
-    phone
-  });
 };
 
-module.exports = checkUserVerifiedOrSendOtp;
+
+module.exports = { checkUserVerified };
