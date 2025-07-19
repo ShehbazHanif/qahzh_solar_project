@@ -29,6 +29,16 @@ app.use('/api/v1/product', require('./routes/productRoute'));
 //admin auth
 app.use('/api/v1/admin-auth', require('./routes/adminAuthRoutes'));
 
+// admin approval Routes
+app.use('/api/v1/admin-approval-product', require('./routes/adminApprovalRoutes'));
+
+//engineer Routes
+app.use('/api/v1/engineer', require('./routes/engineerRoutes'));
+
+//shop Routes
+
+app.use('/api/v1/shop', require('./routes/shopRoutes'));
+
 // 404 Handling
 app.use((req, res) => {
   res.status(404).json({
