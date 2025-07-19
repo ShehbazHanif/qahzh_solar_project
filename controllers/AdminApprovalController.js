@@ -5,8 +5,12 @@ const Product = require('../models/product');
 // Admin: Get all pending products
 const getPendingProducts = async (req, res) => {
     try {
-        const pending = await Product.find({ status: 'pending' }).sort({ createdAt: -1 });
-        res.status(200).json(pending);
+        const pending = await Product.find({ status: 'Pending' }).sort({ createdAt: -1 });
+        res.status(200).json({
+            status: 200,
+            data: pending,
+            message: "fetch pending products successfull"
+        });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
     }
@@ -18,7 +22,7 @@ const updateProductStatus = async (req, res) => {
         const { id } = req.params;
         const { status } = req.body;
 
-        if (!['approved', 'rejected'].includes(status)) {
+        if (!['Approved', 'Rejected'].includes(status)) {
             return res.status(400).json({ message: 'Invalid status' });
         }
 

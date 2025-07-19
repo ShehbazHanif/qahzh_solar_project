@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-userId: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     default: null // Anonymous user until they register/verify
@@ -56,11 +56,12 @@ userId: {
 
   images: [
     {
-      type: String, // If using Cloudinary or external storage
+      type: String,
+      // If using Cloudinary or external storage
     }
   ],
 
-  
+
 
   status: {
     type: String,
