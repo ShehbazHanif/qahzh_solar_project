@@ -19,13 +19,15 @@ app.use(express.urlencoded());
 app.get('/', (req, res) => {
   res.status(200).json({
     status: 200,
-    message: 'Qafzh Solar System API is up and running 🌞'
+    message: 'Qafzh Solar System API is up and running '
   });
 });
 // Auth Routes
 app.use('/api/v1/auth', require('./routes/authRoutes'));
+
 //product Routes
 app.use('/api/v1/product', require('./routes/productRoute'));
+
 //admin auth
 app.use('/api/v1/admin-auth', require('./routes/adminAuthRoutes'));
 
@@ -36,8 +38,10 @@ app.use('/api/v1/admin-approval-product', require('./routes/adminApprovalRoutes'
 app.use('/api/v1/engineer', require('./routes/engineerRoutes'));
 
 //shop Routes
-
 app.use('/api/v1/shop', require('./routes/shopRoutes'));
+
+// ads Routes
+app.use('/api/v1/ads', require('./routes/adsRoutes'));
 
 // 404 Handling
 app.use((req, res) => {
