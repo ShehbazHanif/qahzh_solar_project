@@ -5,6 +5,6 @@ const { authToken, isAdmin } = require('../middlewares/auth');
 
 // Admin-only
 router.get('/pending', authToken, isAdmin, adminApprovalController.getPendingProducts);
-router.patch('/update/:id/status', authToken, isAdmin, adminApprovalController.updateProductStatus);
+router.patch('/update/:id', authToken, isAdmin, adminApprovalController.updateProductStatus);
 
 module.exports = router;
