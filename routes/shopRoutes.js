@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const shopController = require('../controllers/shopController');
-const { isAdmin } = require('../middlewares/auth');
+const { authToken, isAdmin } = require('../middlewares/auth');
 
-router.post('/add', isAdmin, shopController.addShop);
-router.get('/getAll', isAdmin, shopController.getAllShops);
-router.patch('/update/:id', isAdmin, shopController.updateShop);
-router.delete('/delete/:id', isAdmin, shopController.deleteShop);
+router.post('/add', authToken, isAdmin, shopController.addShop);
+router.get('/getAll', authToken, isAdmin, shopController.getAllShops);
+router.patch('/update/:id', authToken, isAdmin, shopController.updateShop);
+router.delete('/delete/:id', authToken, isAdmin, shopController.deleteShop);
 
 module.exports = router;

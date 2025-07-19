@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const { model } = require('mongoose');
 
 const authToken  = (req, res, next) => {
   const authHeader = req.headers.authorization;
