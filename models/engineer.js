@@ -13,7 +13,7 @@ const engineerSchema = new mongoose.Schema({
     },
     services: {
         type: [String],
-        enum: ['install', 'repair'],
+        enum: ['Install', 'Repair'],
         required: true
     },
     governorate: {

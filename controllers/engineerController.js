@@ -1,4 +1,4 @@
-const Engineer = require('../');
+const Engineer = require('../models/engineer');
 
 // Add engineer
 const addEngineer = async (req, res) => {
@@ -24,7 +24,10 @@ const addEngineer = async (req, res) => {
 
         res.status(201).json({ message: 'Engineer added successfully', engineer: newEngineer });
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error });
+        res.status(500).json({
+            message: error.message,
+            error: error
+        });
     }
 };
 
@@ -69,11 +72,27 @@ const deleteEngineer = async (req, res) => {
         res.status(500).json({ message: 'Server error', error });
     }
 };
+const toggleEngineerStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const engineer = await Engineer.findById(id);
+        if (!engineer) return res.status(404).json({ message: 'Engineer not found' });
+
+        engineer.isActive = !engineer.isActive;
+        await engineer.save();
+
+        res.status(200).json({ message: 'Status updated', engineer });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+};
 
 const engineerController = {
     addEngineer,
     getAllEngineers,
     updateEngineer,
-    deleteEngineer
+    deleteEngineer,
+    toggleEngineerStatus
 };
 module.exports = engineerController;

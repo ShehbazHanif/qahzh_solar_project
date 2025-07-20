@@ -1,7 +1,18 @@
 const Product = require('../models/product');
 
 
-
+const getProducts = async (req, res) => {
+    try {
+        const products = await Product.find().sort({ createdAt: -1 });
+        res.status(200).json({
+            status: 200,
+            data: products,
+            message: "fetch pending products successfull"
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+}
 // Admin: Get all pending products
 const getPendingProducts = async (req, res) => {
     try {
@@ -42,7 +53,8 @@ const updateProductStatus = async (req, res) => {
 
 const AdminApprovalController = {
     getPendingProducts,
-    updateProductStatus
+    updateProductStatus,
+    getProducts,
 }
 
 module.exports = AdminApprovalController;

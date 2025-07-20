@@ -4,6 +4,8 @@ const express = require('express');
 
 const connectDB = require('./config/db');
 
+const cors = require('cors');
+
 // Initialize app
 const app = express();
 
@@ -12,6 +14,10 @@ connectDB();
 
 // Middlewares
 app.use(express.json()); // for parsing application/json
+
+// cors
+
+app.use(cors());
 
 app.use(express.urlencoded());
 

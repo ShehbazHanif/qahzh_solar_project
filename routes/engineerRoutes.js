@@ -6,7 +6,8 @@ const { authToken, isAdmin } = require('../middlewares/auth');
 
 router.post('/add', authToken, isAdmin, engineerController.addEngineer);
 router.get('/get', authToken, isAdmin, engineerController.getAllEngineers);
-router.patch('/upadte/:id', authToken, isAdmin, engineerController.updateEngineer);
+router.patch('/update/:id', authToken, isAdmin, engineerController.updateEngineer);
 router.delete('/delete/:id', authToken, isAdmin, engineerController.deleteEngineer);
+router.patch('/toggle-status/:id', authToken, isAdmin, engineerController.toggleEngineerStatus);
 
 module.exports = router;

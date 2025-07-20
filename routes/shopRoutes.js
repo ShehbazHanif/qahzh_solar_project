@@ -7,5 +7,6 @@ router.post('/add', authToken, isAdmin, shopController.addShop);
 router.get('/getAll', authToken, isAdmin, shopController.getAllShops);
 router.patch('/update/:id', authToken, isAdmin, shopController.updateShop);
 router.delete('/delete/:id', authToken, isAdmin, shopController.deleteShop);
+router.patch('/toggle-status/:id', authToken, isAdmin, shopController.toggleShopStatus);
 
 module.exports = router;
