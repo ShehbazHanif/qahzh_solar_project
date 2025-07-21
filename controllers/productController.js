@@ -1,11 +1,10 @@
 const Product = require('../models/product');
 const User = require('../models/auth');
-const { parse } = require('dotenv');
 
 // Called when user is already verified
 const postProduct = async (req, res) => {
   const user = req.user;
-  const { productData } = req.body;
+  const  productData  = req.body;
 
 
   let imageUrl = null;

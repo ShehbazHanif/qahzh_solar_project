@@ -7,7 +7,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 const { checkUserVerified } = require('../middlewares/checkUserVerified')
 const productController = require('../controllers/productController')
 //post product and check user is verfied
-router.post('/post', upload.array('images'), checkUserVerified, productController.postProduct);
+router.post('/post',  upload.array('images'),checkUserVerified,productController.postProduct);
 
 // verfiry otp and post product
 router.post('/verfiry-otp-postProduct', upload.array('images'), productController.verifyOtpAndPostProduct)

@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Muscat",
+    "cities": ["Muscat", "Muttrah", "Seeb", "Bawshar", "Al Amrat"]
+  },
+  {
+    "name": "Ad Dakhiliyah",
+    "cities": ["Nizwa", "Bahla", "Adam", "Manah", "Samail", "Izki", "Bidbid", "Rayidah"]
+  },
+  {
+    "name": "Al Batinah North",
+    "cities": ["Sohar", "Shinas", "Liwa", "Saham", "Al Khaboura", "Suwayq"]
+  },
+  {
+    "name": "Al Batinah South",
+    "cities": ["Rustaq", "Barka", "Nakhal", "Al Awabi", "Wadi Al Maawil"]
+  },
+  {
+    "name": "Dhofar",
+    "cities": ["Salalah", "Taqah", "Mirbat", "Sadah", "Thumrait"]
+  },
+  {
+    "name": "Al Sharqiyah North",
+    "cities": ["Ibra", "Al Mudhaibi", "Bidiyah", "Dema Wa Thaieen"]
+  },
+  {
+    "name": "Al Sharqiyah South",
+    "cities": ["Sur", "Jalan Bani Bu Ali", "Jalan Bani Bu Hassan", "Al Kamil Wal Wafi"]
+  },
+  {
+    "name": "Al Dhahirah",
+    "cities": ["Ibri", "Yanqul", "Dhank"]
+  },
+  {
+    "name": "Al Buraimi",
+    "cities": ["Al Buraimi", "Mahdah", "As Sunaynah"]
+  },
+  {
+    "name": "Al Wusta",
+    "cities": ["Haima", "Duqm", "Mahout", "Al Jazer"]
+  },
+  {
+    "name": "Musandam",
+    "cities": ["Khasab", "Bukha", "Dibba Al-Baya", "Madha"]
+  }
+]

@@ -49,6 +49,12 @@ app.use('/api/v1/shop', require('./routes/shopRoutes'));
 // ads Routes
 app.use('/api/v1/ads', require('./routes/adsRoutes'));
 
+// admin-stats Routes
+app.use('/api/v1/admin-stats',require('./routes/adminStatsRoute'));
+
+// user Routes to get product , shop , engineers
+app.use('/api/v1/user',require('./routes/userRoutes'));
+
 // 404 Handling
 app.use((req, res) => {
   res.status(404).json({

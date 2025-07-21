@@ -1,11 +1,12 @@
 const User = require('../models/auth');
 const generateOTP = require('../utils/generateOtp');
-const sendMail = require('../utils/mailingService'); // ✅ Using mailing instead of SMS
+const sendMail = require('../utils/mailingService'); //  Using mailing instead of SMS
 
 const checkUserVerified = async (req, res, next) => {
   console.log(req.body);
+  const productData = req.body;
 
-  const { phone } = req.body.productData;
+  const { phone } = req.body;
 
   console.log("Phone:", phone);
 
@@ -21,7 +22,7 @@ const checkUserVerified = async (req, res, next) => {
 
   if (user.verified) {
     req.user = user;
-    req.productData = productData;
+        req.productData = productData;
     return next();
   }
 
