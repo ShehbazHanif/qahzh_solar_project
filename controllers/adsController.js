@@ -54,12 +54,32 @@ const updateAd = async (req, res) => {
 // Get all ads (admin or public)
 const getAllAds = async (req, res) => {
     try {
-        const ads = await Ads.find().sort({ createdAt: -1 });
-        res.status(200).json(ads);
+        const { page = 1, limit = 10 } = req.query;
+
+        const total = await Ads.countDocuments();
+
+        const ads = await Ads.find()
+            .sort({ createdAt: -1 })
+            .skip((parseInt(page) - 1) * parseInt(limit))
+            .limit(parseInt(limit));
+
+        res.status(200).json({
+            status: 200,
+            data: ads,
+            total,
+            currentPage: parseInt(page),
+            totalPages: Math.ceil(total / limit),
+            message: "Ads fetched successfully"
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Failed to get ads', error });
+        res.status(500).json({
+            status: 500,
+            message: 'Failed to get ads',
+            error
+        });
     }
 };
+
 
 // Get active ads by placement (for frontend use)
 const getAdsByPlacement = async (req, res) => {
