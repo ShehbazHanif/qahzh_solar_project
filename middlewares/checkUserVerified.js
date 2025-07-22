@@ -1,6 +1,4 @@
 const User = require('../models/auth');
-const generateOTP = require('../utils/generateOtp');
-const sendMail = require('../utils/mailingService'); //  Using mailing instead of SMS
 
 const checkUserVerified = async (req, res, next) => {
   console.log(req.body);
@@ -22,37 +20,30 @@ const checkUserVerified = async (req, res, next) => {
 
   if (user.verified) {
     req.user = user;
-        req.productData = productData;
+    req.productData = productData;
     return next();
   }
-
-  const otp = generateOTP();
+  const otp = 112233;
   const otpExpires = new Date(Date.now() + 5 * 60 * 1000);
+  if (!user.verified) {
+    user.otp = otp;
+    user.otpExpires = otpExpires;
+    await user.save();
 
-  user.otp = otp;
-  user.otpExpires = otpExpires;
-  await user.save();
-
-  const subject = 'Verify Your Email - OTP';
-  const htmlContent = `
-    <p>Hello,</p>
-    <p>Your OTP is <strong>${otp}</strong>.</p>
-    <p>This OTP will expire in 5 minutes.</p>
-  `;
-
-  const result = await sendMail(user.email, subject, htmlContent);
-
-  if (result.accepted?.includes(user.email)) {
-    return res.status(401).json({
-      msg: 'Email is not verified. OTP has been sent.',
-      email: user.email
-    });
-  } else {
-    return res.status(500).json({
-      msg: 'Failed to send OTP via Email',
-      error: result.error || 'Unknown error'
-    });
+    return res.status(404).json({
+      status: 404,
+      data: [],
+      message: "User is not verified please phone veriferd "
+    })
   }
+
+  // const otp = 112233;
+  // const otpExpires = new Date(Date.now() + 5 * 60 * 1000);
+
+  // user.otp = otp;
+  // user.otpExpires = otpExpires;
+  // await user.save();
+
 };
 
 

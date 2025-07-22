@@ -6,7 +6,6 @@ const generateToken = (user) => {
     {
       _id: user._id,
       phone: user.phone,
-      email: user.email,
       role: user.role
     },
     process.env.SECRET_KEY,

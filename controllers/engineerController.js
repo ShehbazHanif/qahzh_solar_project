@@ -32,15 +32,29 @@ const addEngineer = async (req, res) => {
     }
 };
 
-// Get all engineers
 const getAllEngineers = async (req, res) => {
     try {
-        const engineers = await Engineer.find().sort({ createdAt: -1 });
-        res.status(200).json(engineers);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+
+        const total = await Engineer.countDocuments();
+        const engineers = await Engineer.find()
+            .sort({ createdAt: -1 })
+            .skip((page - 1) * limit)
+            .limit(limit);
+
+        res.status(200).json({
+            success: true,
+            data: engineers,
+            total,
+            currentPage: page,
+            totalPages: Math.ceil(total / limit)
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Server error', error });
+        res.status(500).json({ success: false, message: 'Server error', error });
     }
 };
+
 
 // Update engineer
 const updateEngineer = async (req, res) => {

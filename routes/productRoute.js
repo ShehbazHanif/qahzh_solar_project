@@ -12,8 +12,8 @@ router.post('/post',  upload.array('images'),checkUserVerified,productController
 // verfiry otp and post product
 router.post('/verfiry-otp-postProduct', upload.array('images'), productController.verifyOtpAndPostProduct)
 
-//  routes to get products with filters
-router.get('/browse-filters-product', productController.browseFiltersProducts);
+// //  routes to get products with filters
+// router.get('/browse-filters-product', productController.browseFiltersProducts);
 
 // routes to get products 
 router.get('/browse-products', productController.browseProducts);

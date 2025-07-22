@@ -27,13 +27,34 @@ const addShop = async (req, res) => {
 };
 
 // Get all verified shops
+// GET /api/v1/shop/get-all?page=1&limit=10
 const getAllShops = async (req, res) => {
-    try {
-        const shops = await Shop.find().sort({ createdAt: -1 });
-        res.status(200).json(shops);
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error });
-    }
+  try {
+    const page = parseInt(req.query.page) || 1; // Default page 1
+    const limit = parseInt(req.query.limit) || 10; // Default limit 10
+    const skip = (page - 1) * limit;
+
+    const [shops, total] = await Promise.all([
+      Shop.find().sort({ createdAt: -1 }).skip(skip).limit(limit),
+      Shop.countDocuments()
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    res.status(200).json({
+      status: 200,
+      data: shops,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages
+      },
+      message: 'Shops fetched successfully'
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
 };
 
 // Update shop

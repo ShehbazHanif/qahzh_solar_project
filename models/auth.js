@@ -5,10 +5,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  email: {
-    type: String,
-    default: ''
-  },
   password:{
     type:String
   },
